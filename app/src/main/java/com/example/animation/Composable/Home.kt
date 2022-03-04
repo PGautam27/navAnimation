@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -38,16 +39,21 @@ fun Home2(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize().background(Color.Magenta)
     ) {
-        Button(onClick = { navController.navigate("home_one") }, colors = ButtonDefaults.buttonColors(
-            backgroundColor = Color.Red,
-            contentColor = Color.White
-        ), modifier = Modifier
-            .height(100.dp)
-            .width(300.dp)) {
-            Text(text = "Press me Home1", fontSize = 26.sp)
+        if (navController.currentBackStackEntry == LocalLifecycleOwner.current &&
+            navController.previousBackStackEntry != null
+        ){
+            Button(onClick = { navController.popBackStack() }, colors = ButtonDefaults.buttonColors(
+                backgroundColor = Color.Red,
+                contentColor = Color.White
+            ), modifier = Modifier
+                .height(100.dp)
+                .width(300.dp)) {
+                Text(text = "Press me Home1", fontSize = 26.sp)
+            }
         }
+
         Spacer(modifier = Modifier.padding(50.dp))
-        Button(onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(
+        Button(onClick = { navController.navigate("home_three") }, colors = ButtonDefaults.buttonColors(
             backgroundColor = Color.Green,
             contentColor = Color.White
         ), modifier = Modifier.height(100.dp)
@@ -58,18 +64,20 @@ fun Home2(navController: NavController) {
 }
 
 @Composable
-fun Home3() {
+fun Home3(navController: NavController) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize().background(Color.Gray)
     ) {
-        Button(onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(
-            backgroundColor = Color.Green,
-            contentColor = Color.White
-        ), modifier = Modifier.height(100.dp)
-            .width(300.dp)) {
-            Text(text = "Press me Home2", fontSize = 26.sp)
+        if (navController.currentBackStackEntry == LocalLifecycleOwner.current && navController.previousBackStackEntry != null){
+            Button(onClick = { navController.popBackStack() }, colors = ButtonDefaults.buttonColors(
+                backgroundColor = Color.Green,
+                contentColor = Color.White
+            ), modifier = Modifier.height(100.dp)
+                .width(300.dp)) {
+                Text(text = "Press me Home2", fontSize = 26.sp)
+            }
         }
     }
 }
