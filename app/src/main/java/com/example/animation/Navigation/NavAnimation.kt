@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.navArgument
 import com.example.animation.Composable.Home
 import com.example.animation.Composable.Home2
+import com.example.animation.Composable.Home3
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
@@ -61,14 +62,14 @@ fun NavAnimation() {
             },
             exitTransition = { _, target ->
                 when (target.destination.route) {
-                    "home_one" ->
+                    "home_three" ->
                         slideOutOfContainer(AnimatedContentScope.SlideDirection.Left, animationSpec = tween(800))
                     else -> null
                 }
             },
             popEnterTransition = { initial, _ ->
                 when (initial.destination.route) {
-                    "home_one" ->
+                    "home_three" ->
                         slideIntoContainer(AnimatedContentScope.SlideDirection.Right, animationSpec = tween(800))
                     else -> null
                 }
@@ -83,6 +84,38 @@ fun NavAnimation() {
         ){
             Home2(navController)
         }
-
+        composable(
+            "home_three",
+            enterTransition = { initial, _ ->
+                when (initial.destination.route) {
+                    "home_two" ->
+                        slideIntoContainer(AnimatedContentScope.SlideDirection.Left, animationSpec = tween(800))
+                    else -> null
+                }
+            },
+            exitTransition = { _, target ->
+                when (target.destination.route) {
+                    "home_two" ->
+                        slideOutOfContainer(AnimatedContentScope.SlideDirection.Left, animationSpec = tween(800))
+                    else -> null
+                }
+            },
+            popEnterTransition = { initial, _ ->
+                when (initial.destination.route) {
+                    "home_two" ->
+                        slideIntoContainer(AnimatedContentScope.SlideDirection.Right, animationSpec = tween(800))
+                    else -> null
+                }
+            },
+            popExitTransition = { _, target ->
+                when (target.destination.route) {
+                    "home_two" ->
+                        slideOutOfContainer(AnimatedContentScope.SlideDirection.Right, animationSpec = tween(800))
+                    else -> null
+                }
+            }
+        ){
+            Home3(navController)
+        }
     }
 }
